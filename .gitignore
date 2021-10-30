@@ -14,3 +14,7 @@ doc/api/
 # IDEA
 .idea/
 ruian-api.iml
+
+# RUIAN DATA
+ruian
+ruian.source

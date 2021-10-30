@@ -1,0 +1,13 @@
+[Unit]
+Description=RUIAN API
+
+[Service]
+User=ruian
+WorkingDirectory=/home/ruian/repos/ruian-api/
+ExecStart=/home/ruian/repos/flutter/bin/dart bin/main.dart --src=ruian/ --port=8001 --path=/home/ruian/repos/ruian-api/
+Restart=always
+# Remove this line if using Angel:
+# Environment=ANGEL_ENV=production
+
+[Install]
+WantedBy=multi-user.target

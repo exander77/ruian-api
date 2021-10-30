@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUIAN API | fnx.io</title>
+    <meta name="description" content="RUIAN API">
+    <link rel="stylesheet" href="http://demo.fnx.io/fnx_ui/ng2/packages/fnx_ui/css/fnx_ui.css">
+    <style rel="stylesheet" type="text/css">
+.content {
+    margin: 0 auto;
+    max-width: 60em;
+}
+
+.fnx-logo {
+    height: 5em;
+}
+
+.heading {
+    display: block;
+    width: 100%;
+    font-size: 100px;
+    font-family: Impact, serif;
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.subheading {
+    width: 100%;
+    font-size: 32px;
+    text-align: center;
+    color: #666;
+}
+.subheading a {
+    text-decoration: none !important;
+    border-bottom: 1px dotted #777;
+}
+.subheading a:hover {
+    border-bottom: 1px solid #777;
+}
+.subheading + .paragraph {
+    margin-top: 4rem;
+}
+pre {
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    margin: 10px 0;
+}
+
+.bg--light-grey {
+    background: #f1f1f1 !important;
+}
+
+.api-key-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.api-key-form button,
+.api-key-form input {
+    order: 1;
+}
+    </style>
+</head>
+<body>
+
+<div class="content bg--white">
+    <div class="margin--big--bottom">
+        <h1 class="heading">RUIAN API</h1>
+        <p class="paragraph"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+            Simple REST (JSON over HTTP) API:
+        </font></font></p>
+    </div>
+
+    <div class="panel padding--big margin--big--vertical bg--light-grey">
+        <h1>Validator</h1>
+        <p><font style="vertical-align: inherit;">Send the address and it'll confirm if the address exists or it finds the most likely address if information is missing or incomplete. It tries to fill all missing information (for example missing ZIP code)</font></font></p>
+
+        <div class="panel panel--raising margin--big--vertical bg--white">
+            <div class="panel__header">
+                <h2>validate</h2>
+            </div>
+            <div class="panel__content">
+                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">The validate service tries to find the specified address in the registry. </font><font style="vertical-align: inherit;">If this fails, it will try to find a suitable candidate (perhaps a typo in the street, or the name of the municipality, part of the municipality, perhaps the reversed address and street numbers…).</font></font></p>
+                <h3>GET request</h3>
+                <pre class="panel padding--small bg--light-grey">curl http://localhost:8123/api/v1/ruian/validate?&amp;municipalityName={municipalityName}&amp;zip={zip}&amp;cp={cp}&amp;street={streetName}</pre>
+                <h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Parameters</font></font></h4>
+                <ul>
+                    <li><code>municipalityName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - name of the municipality</font></font></li>
+                    <li><code>zip</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - ZIP (postal) code</font></font></li>
+                    <li><code>ce</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - evidence number (non-standard buildings)</font></font></li>
+                    <li><code>co</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - street (orientation) number (unique within street)</font></font></li>
+                    <li><code>cp</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - address (descriptive)  number (unique within municipality)</font></font></li>
+                    <li><code>street</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - the name of the street or part of the municipality</font></font></li>
+                </ul>
+                <h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Answer</font></font></h4>
+                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">In response, you will receive a JSON similar to this:</font></font></p>
+                <pre class="panel padding--small bg--light-grey">{<font></font>
+    "status": "POSSIBLE",<font></font>
+    "message": null,<font></font>
+    "place": {<font></font>
+        "confidence": 0.9413223140495868,<font></font>
+        "municipalityId": 546801,<font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        "municipalityName": "Nová Včelnice",</font></font><font></font>
+        "streetName": "Zámecká",<font></font>
+        "ce": null,<font></font>
+        "cp": "2",<font></font>
+        "co": null,<font></font>
+        "zip": 37842<font></font>
+    }<font></font>
+}</pre>
+
+
+                <h4>Status</h4>
+                <ul>
+                    <li><code>"ERROR"</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - Query data error.</font></font></li>
+                    <li><code>"NOT_FOUND"</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - No data found.</font></font></li>
+                    <li><code>"POSSIBLE"</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - Most likely address found (some deviation is present).</font></font></li>
+                    <li><code>"MATCH"</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - Match.</font></font></li>
+                </ul>
+
+                <h4>Message</h4>
+                <div class="margin--small--bottom">
+                    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Description of the condition or error.</font></font></p>
+                </div>
+
+                <h4>Place</h4>
+                <ul>
+                    <li><code>confidence</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - the accuracy of the match</font></font></li>
+                    <li><code>municipalityId</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - municipality ID (internal)</font></font></li>
+                    <li><code>municipalityName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - name of the municipality</font></font></li>
+                    <li><code>streetName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - the name of the street or part of the municipality</font></font></li>
+                    <li><code>ce</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - evidence number (non-standard buildings)</font></font></li>
+                    <li><code>cp</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - address (descriptive) number (unique within municipality)</font></font></li>
+                    <li><code>co</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - street (orientation) number (unique within street)</font></font></li>
+                    <li><code>zip</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - ZIP (postal) code</font></font></li>
+                </ul>
+
+                <h4>HTTP kód</h4>
+                <ul>
+                    <li><code>200</code> – OK</li>
+                    <li><code>422</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - Missing parameters</font></font></li>
+                    <li><code>500</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - Internal server error</font></font></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel padding--big margin--big--vertical bg--light-grey">
+	
+    </div>
+</div>
+
+</body></html>
