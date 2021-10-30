@@ -259,7 +259,8 @@ class Repository {
   static String normalizeName(String name) {
     if (name == null) return noStreet;
     if (name == noStreet) return noStreet;
-    return Diacritics.removeDiacritics(name.toLowerCase()).replaceAll('.', '');
+    final String result = Diacritics.removeDiacritics(name.toLowerCase()).replaceAll('.', '');
+    return result;
   }
 
   void printRandomDebug(int count) {
