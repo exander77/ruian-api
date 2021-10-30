@@ -100,20 +100,40 @@ pre {
                 </ul>
                 <h4><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Answer</font></font></h4>
                 <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">In response, you will receive a JSON similar to this:</font></font></p>
-                <pre class="panel padding--small bg--light-grey">{<font></font>
-    "status": "POSSIBLE",<font></font>
-    "message": null,<font></font>
-    "place": {<font></font>
-        "confidence": 0.9413223140495868,<font></font>
-        "municipalityId": 546801,<font></font><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-        "municipalityName": "Nová Včelnice",</font></font><font></font>
-        "streetName": "Zámecká",<font></font>
-        "ce": null,<font></font>
-        "cp": "2",<font></font>
-        "co": null,<font></font>
-        "zip": 37842<font></font>
-    }<font></font>
+                <pre class="panel padding--small bg--light-grey">{
+    "status": "POSSIBLE",
+    "message": null,
+    "place": {
+        "confidence": 0.9413223140495868,
+        "municipalityId": 546801,
+        "municipalityName": "Nová Včelnice",
+        "streetName": "Zámecká",
+        "ce": null,
+        "cp": "2",
+        "co": null,
+        "zip": 37842
+    }
 }</pre>
+                <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CURL example:</font></font></p>
+                <pre class="panel padding--small bg--light-grey">curl "http://localhost:8123/api/v1/ruian/validate?municipalityName=Praha&cp=4&street=Česákova+4&zip=15001" 2>/dev/null | python3 -mjson.tool
+{
+    "status": "POSSIBLE",
+    "message": null,
+    "place": {
+        "confidence": 0.7116908192307692,
+        "regionId": "CZ010",
+        "regionName": "Hlavn\u00ed m\u011bsto Praha",
+        "municipalityId": 554782,
+        "municipalityName": "Praha",
+        "streetName": "Vlas\u00e1kova",
+        "ce": null,
+        "cp": "864",
+        "co": null,
+        "zip": 15500,
+        "id": 30486297
+    }
+}
+</pre>
 
 
                 <h4>Status</h4>
@@ -132,6 +152,8 @@ pre {
                 <h4>Place</h4>
                 <ul>
                     <li><code>confidence</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - the accuracy of the match</font></font></li>
+                    <li><code>regionId</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - region ID (internal)</font></font></li>
+                    <li><code>regionName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - name of the region</font></font></li>
                     <li><code>municipalityId</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - municipality ID (internal)</font></font></li>
                     <li><code>municipalityName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - name of the municipality</font></font></li>
                     <li><code>streetName</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> - the name of the street or part of the municipality</font></font></li>
