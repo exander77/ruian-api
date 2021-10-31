@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+RETURN=2
 VENDORDIR="data/vendor"
 mkdir -p "$VENDORDIR"
 REPOID=$(date -d "$(date +%Y-%m-01) -1 day" +%Y%m%d)
@@ -16,6 +17,8 @@ if [ ! -d "$REPODIR" ]; then
     for i in data/vendor/"$REPOID"/CSV/*.csv; do
         recode windows-1250..utf-8 "$i"
     done
+    RETURN=0
 fi
 rm ruian
 ln -s "data/vendor/$REPOID/CSV/" ruian
+exit $RETURN
