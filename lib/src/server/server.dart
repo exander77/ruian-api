@@ -36,7 +36,7 @@ class Server {
   Future start() async {
     await repositoryHandler.initialize();
 
-    repositoryHandler.update();
+    //repositoryHandler.update();
 
     // Set auto updating of repository data.
     new Timer.periodic(
