@@ -19,6 +19,6 @@ if [ ! -d "$REPODIR" ]; then
     done
     RETURN=0
 fi
-rm ruian
-ln -s "data/vendor/$REPOID/CSV/" ruian
+rm ruian-data
+ln -s "data/vendor/$REPOID/CSV/" ruian-data
 exit $RETURN
